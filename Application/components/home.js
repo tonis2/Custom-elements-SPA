@@ -1,5 +1,5 @@
 import { HTML } from "https://unpkg.com/kelbas"
-import Element from "/modules/Element.js"
+import Element from "../modules/Element.js"
 
 
 export default class Home extends Element {
