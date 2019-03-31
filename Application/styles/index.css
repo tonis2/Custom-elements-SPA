@@ -1,0 +1,37 @@
+@import "https://unpkg.com/mustard-ui@latest/dist/css/mustard-ui.min.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css";
+
+body {
+  width: 60%;
+  margin: 0 auto;
+  background: #e67e22;
+}
+#posts-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-row-gap: 20px;
+  margin: 50px 0;
+}
+
+#posts-container .post {
+  background: #ecf0f1;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+#post-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-row-gap: 20px;
+  margin-top:50px;
+}
+
+#post-container h2 {
+  color: #ecf0f1;
+}
+
+#post-container p {
+  color: #ecf0f1;
+  background: #d35400;
+  padding: 20px;
+}
