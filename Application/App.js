@@ -3,7 +3,7 @@ import { HTML } from "https://unpkg.com/kelbas";
 
 import * as component from "./components/index.js";
 
-const router = new Router(window.location.origin);
+const router = new Router();
 
 for (let key in component) {
   component[key].prototype.router = router;
