@@ -61,7 +61,8 @@ Good lets now move on to writing `JavaScript`
 
 ### JavaScript components
 
-Our Application starts from `App.js` so let's go there and import our first `libraries` \
+Our Application starts from `App.js` so let's go there and import our first `libraries` 
+
 On top of the `App.js` file write
 
 ```JS
@@ -72,8 +73,10 @@ import { HTML } from "https://unpkg.com/kelbas";
 
 I will explain a bit what these libraries do.
 
-Lets start with [webcomponents-lite](https://github.com/webcomponents/webcomponentsjs/), this will add `polyfills` to your Application so if we would like our App to work on a bit older browser we need to use the `polyfills` bundle. \
-Next is the `Router` we will be using [navigo](https://github.com/krasimir/navigo), it's a very light weight awesome routing library for the browsers.\
+Lets start with [webcomponents-lite](https://github.com/webcomponents/webcomponentsjs/), this will add `polyfills` to your Application so if we would like our App to work on a bit older browser we need to use the `polyfills` bundle. 
+
+Next is the `Router` we will be using [navigo](https://github.com/krasimir/navigo), it's a very light weight awesome routing library for the browsers.
+
 Then we have the [HTML](https://github.com/tonis2/kelbas) library and that's created by myself, it extends on the idea of using [ES6 template strings](https://wesbos.com/template-strings-html/) to create `HTML` elements.
 
 
