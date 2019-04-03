@@ -1,3 +1,4 @@
+import "https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-lite.js";
 import Router from "https://unpkg.com/navigo@6.0.2/src/index.js";
 import { HTML } from "https://unpkg.com/kelbas";
 
