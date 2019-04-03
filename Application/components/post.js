@@ -13,6 +13,6 @@ export default class Post extends Element {
         return HTML`<section id="post-container">
                         <h2>${title}</h2>
                         <p>${body}</p>
-                    </sectio>`
+                    </section>`
     }
 }

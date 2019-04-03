@@ -20,6 +20,6 @@ export default class Home extends Element {
                                                 <p class="post-body">${post.body}</p>
                                         </div>`
                          })}
-                    </sectio>`
+                    </section>`
     }
 }
