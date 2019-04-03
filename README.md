@@ -11,6 +11,10 @@ This will be a very basic project, it will take maybe 15 minutes to get running 
 
 Also the `Application` will be super-light-weight, so the browser can load it quick and it's performance will be super.
 
+You can view the `live` result [here](https://tonis2.github.io/Custom-elements-blog/)
+
+And check the full `code` [here](https://github.com/tonis2/Custom-elements-blog)
+
 
 Okay so lets start 
 
@@ -374,5 +378,7 @@ body {
 
 Now serve your site from a `http-server` and you have a **Blog** , you can use whatever you like, for example with `node.js` you can use 
 [http-server](https://www.npmjs.com/package/http-server)
+
+If you got in trouble you can check the full-code [here](https://github.com/tonis2/Custom-elements-blog)
 
 I hope my tutorial was helpful and give your thoughts about it in the comments. 
