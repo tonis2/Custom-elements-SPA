@@ -55,14 +55,6 @@ Lets focus on the `script` tag, we have `type=module` there, we need to use it i
     * styles
     * App.js
 
-So our project folder now should look like this
-
-* Application
-    * components
-    * modules
-    * styles
-    * App.js
-* index.html
 
 Good lets now move on to writing `JavaScript`
 
