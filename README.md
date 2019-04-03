@@ -1,19 +1,15 @@
-# Blog with custom elements
-
 Browser engines have evolved enormously and i want to share some ideas how to quickly build a `JavaScript` Single Page Application,
 using cool browser features like 
 
-> [Async functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) \
-> [Custom elements V1](https://developers.google.com/web/fundamentals/web-components/customelements) \
+> [Async functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) 
+> [Custom elements V1](https://developers.google.com/web/fundamentals/web-components/customelements) 
 > [ES6 Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)
 
 This will be a very basic project, it will take maybe 15 minutes to get running and we wont need to install any `node_modules` just write the code and boom it's ready.
 
 Also the `Application` will be super-light-weight, so the browser can load it quick and it's performance will be super.
 
-You can view the `live` result [here](https://tonis2.github.io/Custom-elements-blog/)
-
-And check the full `code` [here](https://github.com/tonis2/Custom-elements-blog)
+You can view the `live` result [here](https://tonis2.github.io/Custom-elements-blog/) and check the full `code` [here](https://github.com/tonis2/Custom-elements-blog)
 
 
 Okay so lets start 
@@ -29,7 +25,7 @@ In your project folder create a new file called `index.html`
 And add some content to it
 
 > `index.html`
-```HTML
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,7 +71,7 @@ Our Application starts from `App.js` so let's go there and import our first `lib
 
 On top of the `App.js` file write
 
-```JS
+```javascript
 import Router from "https://unpkg.com/navigo@6.0.2/src/index.js";
 import { HTML } from "https://unpkg.com/kelbas";
 ```
@@ -90,7 +86,7 @@ Then we have the [HTML](https://github.com/tonis2/kelbas) library and that's cre
 Next we will create start our `Router` and start listening for routes `"/"` and `"/post/:id/"`
 
 > `App.js`
-```JS
+```javascript
 const router = new Router();
 
 // Attach routes
@@ -105,7 +101,7 @@ router.resolve();
 If you would go on to page `"/"` it should fire a function but it's currently empty so lets show something, lets show a title *Hello*
 
 > `App.js`
-```JS
+```javascript
 router.on("/", () => {
   const element = HTML`<h2>Hello</h2>`;
   document.querySelector("#root").replaceWith(element);
@@ -129,7 +125,7 @@ So our components folder looks like this
  In our `index.js` lets just `export` the other 2 files, so we could easily import all our components later. 
 
 > `index.js`
- ```JS
+ ```javascript
 export { default as home } from "./home.js"
 export { default as post } from "./post.js"
  ```
@@ -149,7 +145,7 @@ Our `Element.js` will be a wrapper for native `HTMLElement`, i would recommend u
 In the newly created `Element.js` add 
 
 > `Element.js`
-```JS
+```javascript
 export default class Element extends HTMLElement {
     //Element is connected
     async connectedCallback() {
@@ -191,7 +187,7 @@ Now we have our project fully setup and we can start implementing pages, as this
 
 We can pull `posts`  in by just calling 
 
-```JS
+```javascript
 fetch('https://jsonplaceholder.typicode.com/posts/')
   .then(response => response.json())
   .then(json => console.log(json))
@@ -202,7 +198,7 @@ Lets add some `JavaScript` to our `/components/home.js`
 
 
 > `home.js`
-```JS
+```javascript
 import { HTML } from "https://unpkg.com/kelbas"
 import Element from "../modules/Element.js"
 
@@ -245,7 +241,7 @@ Next lets add some `JavaScript` to our `/components/post.js`
 
 
 > `post.js`
-```JS
+```javascript
 import { HTML } from "https://unpkg.com/kelbas"
 import Element from "../modules/Element.js"
 
@@ -279,7 +275,7 @@ Now lets go back to our `App.js`
 First lets `import` all our `components` from `/Application/components/index.js`, add next line to your `App.js`
 
 > `App.js`
-```JS
+```javascript
 import * as component from "./components/index.js";
 
 ```
@@ -290,7 +286,7 @@ and we also define the customElements as `file-name + element` so our `home.js` 
 After defining the `customElements` you can attach `<home-element></home-element>` to your `index.html` and it will work, how cool is that.
 
 > `App.js`
-```JS
+```javascript
 for (let key in component) {
   component[key].prototype.router = router;
   customElements.define(`${key}-element`, component[key]);
@@ -301,7 +297,7 @@ for (let key in component) {
 Okay we are almost done, now lets finally finish our routes so when you arrive on the page you get all the posts when you click on a post you will get a single post page.
 
 > `App.js`
-```JS
+```javascript
 router.on("/", () => {
   const element = HTML`<home-element id="root"></home-element>`;
   document.querySelector("#root").replaceWith(element);
@@ -334,7 +330,7 @@ Lets add `index.css` and fill it with some simple `css`
 
 > `index.css`
 
-```CSS
+```css
 @import "https://unpkg.com/mustard-ui@latest/dist/css/mustard-ui.min.css";
 @import "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css";
 
