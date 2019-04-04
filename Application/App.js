@@ -1,12 +1,17 @@
 import Router from "https://unpkg.com/navigo@6.0.2/src/index.js";
 import { HTML } from "https://unpkg.com/kelbas";
 
+//Lets import all our components
 import * as component from "./components/index.js";
 
+//Create a new router
 const router = new Router();
 
 for (let key in component) {
+  //Add our router to all our components
   component[key].prototype.router = router;
+  
+  //Register our components
   customElements.define(`${key}-element`, component[key]);
 }
 
@@ -21,5 +26,5 @@ router.on("/post/:id", params => {
         element.post = params.id
   document.querySelector("#root").replaceWith(element);
 });
-
+//Run our router
 router.resolve();
