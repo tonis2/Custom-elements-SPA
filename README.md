@@ -12,6 +12,8 @@ Also the `Application` will be super-light-weight, so the browser can load it qu
 You can view the `live` result [here](https://tonis2.github.io/Custom-elements-blog/) and check the full `code` [here](https://github.com/tonis2/Custom-elements-blog)
 
 
+For developing you should use a `server` for serving your `index.html`, you can use whatever you like, for example with `node.js` you can use [http-server](https://www.npmjs.com/package/http-server)
+
 Okay so lets start 
 
 -----
@@ -24,7 +26,7 @@ In your project folder create a new file called `index.html`
 
 And add some content to it
 
-> `index.html`
+ `index.html`
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -67,53 +69,35 @@ Good lets now move on to writing `JavaScript`
 -----
 ## JavaScript files setup
 
-Our Application starts from `App.js` so let's go there and import our first `libraries` 
+Our Application starts from `App.js` so let's create this first.
 
-On top of the `App.js` file write
-
+Copy all this to your `App.js`
 ```javascript
 import Router from "https://unpkg.com/navigo@6.0.2/src/index.js";
 import { HTML } from "https://unpkg.com/kelbas";
+
+const router = new Router();
+
+router.on("/", () => {
+  const element = HTML`<h2>Hello</h2>`;
+  document.querySelector("#root").replaceWith(element);
+});
+
+router.on("/post/:id", params => {});
+router.resolve();
+
 ```
 
-I will explain a bit what these libraries do.
+Currently when we open our Application we should see *Hello*
+
+I will explain a bit what our `imported` libraries do.
 
 For the `Router` we will be using [navigo](https://github.com/krasimir/navigo), it's a very light weight awesome routing library for the browsers.
 
 Then we have the [HTML](https://github.com/tonis2/kelbas) library and that's created by myself, it extends on the idea of using [ES6 template strings](https://wesbos.com/template-strings-html/) to create `HTML` elements.
 
 
-Next we will create start our `Router` and start listening for routes `"/"` and `"/post/:id/"`
-
-> `App.js`
-```javascript
-const router = new Router();
-
-// Attach routes
-router.on("/", () => {});
-
-router.on("/post/:id", params => {});
-
-router.resolve();
-
-```
-
-If you would go on to page `"/"` it should fire a function but it's currently empty so lets show something, lets show a title *Hello*
-
-> `App.js`
-```javascript
-router.on("/", () => {
-  const element = HTML`<h2>Hello</h2>`;
-  document.querySelector("#root").replaceWith(element);
-});
-```
-
-In our route `"/"` we create a `H2` element Hello and then replace our `root` with that, this is how basic routing works. 
-
-
-But we want to create a **Blog** so we need a page that shows our posts and a page that shows a single post.
-
-In our `components` folder lets create 3 files `home.js` , `post.js` and `index.js`
+Next in our `components` folder lets create 3 files `home.js` , `post.js` and `index.js`
 
 So our components folder looks like this 
 
@@ -124,7 +108,7 @@ So our components folder looks like this
 
  In our `index.js` lets just `export` the other 2 files, so we could easily import all our components later. 
 
-> `index.js`
+`index.js`
  ```javascript
 export { default as home } from "./home.js"
 export { default as post } from "./post.js"
@@ -144,7 +128,7 @@ Our `Element.js` will be a wrapper for native `HTMLElement`, i would recommend u
 
 In the newly created `Element.js` add 
 
-> `Element.js`
+`Element.js`
 ```javascript
 export default class Element extends HTMLElement {
     //Element is connected
@@ -190,14 +174,13 @@ We can pull `posts`  in by just calling
 ```javascript
 fetch('https://jsonplaceholder.typicode.com/posts/')
   .then(response => response.json())
-  .then(json => console.log(json))
 ```
 
 
 Lets add some `JavaScript` to our `/components/home.js`
 
 
-> `home.js`
+`home.js`
 ```javascript
 import { HTML } from "https://unpkg.com/kelbas"
 import Element from "../modules/Element.js"
@@ -228,7 +211,7 @@ export default class Home extends Element {
 
 First we add our required libraries, we `import` the `Element.js` that we created before and also the [HTML](https://github.com/tonis2/kelbas) parser that i talked about earlier.
 
-If you have developed with `React.js` then this could seem quite familiar, which is awesome in my opinions cause we dont need to bundle `JSX` to render this and it has basically the same `API`.
+If you have developed with `React.js` then this could seem quite familiar, which is awesome in my opinion, cause we dont need to bundle `JSX` to render this and it basically has the same `API`.
 
 We have an [async](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) function to pull the `data`,
 then in the `render` function first we wait for the data and then show the `data` retrieved, very simple. \
@@ -240,7 +223,7 @@ There is also the function `open`, just add it currently, we will implement `thi
 Next lets add some `JavaScript` to our `/components/post.js`
 
 
-> `post.js`
+`post.js`
 ```javascript
 import { HTML } from "https://unpkg.com/kelbas"
 import Element from "../modules/Element.js"
@@ -268,36 +251,25 @@ This is basically the same as `home.js` but it will load a single post data, not
 we will add this as an `id` in the `router` at `App.js`
 
 
+Now lets go back to our `App.js`, we will implement our newly created components and update the routes
 
+Copy all of this into your `App.js`
 
-Now lets go back to our `App.js`
-
-First lets `import` all our `components` from `/Application/components/index.js`, add next line to your `App.js`
-
-> `App.js`
+`App.js`
 ```javascript
+
+import Router from "https://unpkg.com/navigo@6.0.2/src/index.js";
+import { HTML } from "https://unpkg.com/kelbas";
+
+const router = new Router();
+
 import * as component from "./components/index.js";
 
-```
-
-Then we attach our `router` to all our `components` so we could easily change routes from inside the `component` \
-and we also define the customElements as `file-name + element` so our `home.js` becomes `home-element`
-
-After defining the `customElements` you can attach `<home-element></home-element>` to your `index.html` and it will work, how cool is that.
-
-> `App.js`
-```javascript
 for (let key in component) {
   component[key].prototype.router = router;
   customElements.define(`${key}-element`, component[key]);
 }
-```
 
-
-Okay we are almost done, now lets finally finish our routes so when you arrive on the page you get all the posts when you click on a post you will get a single post page.
-
-> `App.js`
-```javascript
 router.on("/", () => {
   const element = HTML`<home-element id="root"></home-element>`;
   document.querySelector("#root").replaceWith(element);
@@ -309,12 +281,21 @@ router.on("/post/:id", params => {
   document.querySelector("#root").replaceWith(element);
 });
 
+router.resolve();
 ```
-Whats happening there is that when `route` is fired, we will create our `HTML` `customElement` that we `imported` and then `defined` before.
-and we will use [replaceWith](https://developer.mozilla.org/en-US/docs/Web/API/ChildNode/replaceWith) on our ` <div id="root"></div>` element in `index.html`.
+
+First we `import` all our `components` from `/Application/components/index.js`
+
+Then we attach our `router` to all our `components` so we could easily change routes from inside the `component` 
+and we also define the customElements as `file-name + element` so our `home.js` becomes `home-element` in `custom-elemets` registry.
+
+After defining the `customElements` you can attach `<home-element></home-element>` to your `index.html` and it will work, how cool is that.
+
+We also updated our routes, whats happening there is that when `route` is fired, we will create our `HTML` `customElement` that we `imported` and then `defined` before.
+
+Then we will use [replaceWith](https://developer.mozilla.org/en-US/docs/Web/API/ChildNode/replaceWith) on our ` <div id="root"></div>` element in `index.html`.
 
 Also make sure to give your elements something to be `identified` with like `id` or `key`, so we can find the element that we want to replace each time route changes, thats why `home-element` and `post-element` have `id=root` also.
-
 
 And now the final part add, lets add our designs.
 
@@ -328,7 +309,7 @@ In your `styles` folder at
 
 Lets add `index.css` and fill it with some simple `css`
 
-> `index.css`
+`index.css`
 
 ```css
 @import "https://unpkg.com/mustard-ui@latest/dist/css/mustard-ui.min.css";
@@ -370,10 +351,6 @@ body {
 }
 ```
 
-
-
-Now serve your site from a `http-server` and you have a **Blog** , you can use whatever you like, for example with `node.js` you can use 
-[http-server](https://www.npmjs.com/package/http-server)
 
 If you got in trouble you can check the full-code [here](https://github.com/tonis2/Custom-elements-blog)
 
