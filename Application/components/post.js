@@ -4,6 +4,7 @@ import Element from "../modules/Element.js"
 
 export default class Post extends Element {
     async getPost() {
+        //this.post is defined at main.js
        return await fetch(`https://jsonplaceholder.typicode.com/posts/${this.post}`).then(res => res.json())
     }
 
