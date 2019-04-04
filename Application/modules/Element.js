@@ -23,7 +23,9 @@ export default class Element extends HTMLElement {
         this.replaceWith(element)
         this.afterUpdate()
     }
-
+    
+    
+    //You can use these function to run your functions between component state changes, like with react.js
     install() { }
 
     installed() { }
