@@ -19,6 +19,7 @@ export default class Element extends HTMLElement {
 
     //Update element
     async update() {
+        const element = await this.render()
         this.beforeUpdate()
         this.replaceWith(element)
         this.afterUpdate()
